@@ -9,7 +9,7 @@ function BlogController( $scope, $routeParams, $http ) {
  
     // load all info
     $scope.initialize = function() {
-       $scope.blogTitle = "prayagupd"
+       $scope.blogTitle = "prayagupa"
        $scope.address = "North West"
        $scope.email = "email - openssl enc -base64 -d <<< cHJheWFnLnVwZEBnbWFpbC5jb20K"
        $scope.header = "/code/love/meditate"
