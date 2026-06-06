@@ -1,135 +1,337 @@
-<html ng-app>
-<title>/prayag/upa</title>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prayag Upadhyay — Software Engineer</title>
+  <meta name="description" content="Prayag Upadhyay — software engineer (Java, Python, distributed systems, LLMs), father, optimist, writer, and meditator based in the Pacific North West." />
+  <meta name="author" content="Prayag Upadhyay" />
+  <link rel="canonical" href="https://prayagupa.github.io/" />
+  <link rel="icon" href="https://github.com/prayagupa.png" />
 
-.blog-links    {
-	color:#839496;
-	background-color:transparent; 
-}
+  <!-- Open Graph / social -->
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content="Prayag Upadhyay — Software Engineer" />
+  <meta property="og:description" content="Software engineer (Java, Python, distributed systems, LLMs), father, optimist, writer, and meditator." />
+  <meta property="og:url" content="https://prayagupd.github.io/" />
+  <meta property="og:image" content="https://github.com/prayagupa.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:creator" content="@evolving__unit" />
 
-.monospace {
-	font-family: Consolas, monaco, monospace;
-}
+  <!-- Machine-readable identity for search engines & LLMs (kept static so it survives client rendering) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Prayag Upadhyay",
+    "alternateName": "prayagupa",
+    "url": "https://prayagupd.github.io/",
+    "image": "https://github.com/prayagupa.png",
+    "jobTitle": "Staff Software Engineer",
+    "description": "Software engineer (Java, Python, distributed systems, LLMs), father, optimist, writer, and meditator.",
+    "knowsAbout": ["Software Engineering", "Java", "Python", "Distributed Systems", "Large Language Models", "Retrieval-Augmented Generation", "AI Agents", "Model Context Protocol"],
+    "sameAs": [
+      "https://github.com/prayagupa/",
+      "https://stackoverflow.com/users/432903/prayag-upd",
+      "https://x.com/evolving__unit",
+      "https://linkedin.com/in/prayagupadhyay/"
+    ]
+  }
+  </script>
 
-.solarized-light{
-	background-color : #fdf6e3;
-}
+  <style>
+    :root {
+      --bg: #fdf6e3;
+      --bg-soft: #eee8d5;
+      --fg: #586e75;
+      --fg-strong: #073642;
+      --muted: #93a1a1;
+      --accent: #d33682;
+      --accent-2: #b58900;
+      --link: #268bd2;
+      --border: #e6dfc8;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #002b36;
+        --bg-soft: #073642;
+        --fg: #93a1a1;
+        --fg-strong: #eee8d5;
+        --muted: #586e75;
+        --accent: #d33682;
+        --accent-2: #b58900;
+        --link: #2aa198;
+        --border: #0a3a47;
+      }
+    }
 
-.solarized{
-    background-color: #002b36;
-}
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      font-size: 17px;
+    }
+    .wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 64px 24px 96px;
+    }
 
-.magenta{
-  color:#d33682;
-}
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
 
-.yellow{
-   color:#b58900;
-}
+    header { display: flex; align-items: center; gap: 20px; margin-bottom: 40px; }
+    .avatar {
+      width: 84px; height: 84px; border-radius: 50%;
+      object-fit: cover; flex: 0 0 auto;
+      border: 1px solid var(--border);
+    }
+    h1 {
+      font-size: 1.5rem; margin: 0; color: var(--fg-strong); font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .tagline { margin: 4px 0 0; color: var(--muted); font-size: 0.95rem; }
+    .tagline .sep { color: var(--accent-2); }
 
+    section { margin: 36px 0; }
+    h2 {
+      font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--accent); margin: 0 0 14px; font-weight: 600;
+    }
 
-.outer {
-    overflow: hidden;
+    p { margin: 0 0 14px; }
 
-}
-.center-helper {
-    float: left;
-    position: relative;
-    left: 50%;
+    ul.links { list-style: none; margin: 0; padding: 0; }
+    ul.links li { padding: 8px 0; border-bottom: 1px solid var(--border); }
+    ul.links li:last-child { border-bottom: 0; }
+    ul.links .label { color: var(--muted); display: inline-block; min-width: 130px; }
 
-}
-.inner {
-    float: left;
-    position: relative;
-    left: -50%;
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
-}
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      font-size: 0.85rem; padding: 3px 10px; border-radius: 999px;
+      background: var(--bg-soft); color: var(--fg-strong); border: 1px solid var(--border);
+    }
 
-.img-circular{
-  width: 200px;
-  height: 200px;
-  background-image: url('https://media.licdn.com/dms/image/v2/C5603AQHJ8bR0fzANNA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1646800570900?e=1747872000&v=beta&t=SiLumElCNT7NBbfWoK-Y5PGFV1w7cBadU6TKJFXe7sc');
-  //background-image: url('https://lh6.googleusercontent.com/-2rpUMH8xSyY/UcWgjCtRGkI/AAAAAAAAM44/sqL7DtawhHw/w379-h383-no/RefusedPray.JPG');
-  background-size: cover;
-  display: block;
-  border-radius: 100px;
-  -webkit-border-radius: 100px;
-  -moz-border-radius: 100px;
-  background-position: center;
-}
+    .captcha { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .captcha label { color: var(--fg-strong); }
+    .captcha input {
+      width: 52px; padding: 2px 6px; font: inherit;
+      background: var(--bg); color: var(--fg-strong);
+      border: 1px solid var(--border); border-radius: 6px;
+    }
+    .captcha button {
+      font: inherit; font-size: 0.85rem; padding: 3px 12px; cursor: pointer;
+      background: var(--bg-soft); color: var(--link);
+      border: 1px solid var(--border); border-radius: 6px;
+    }
+    .captcha button:hover { border-color: var(--link); }
+    .captcha .err { color: var(--accent); font-size: 0.85rem; }
 
-.pre {
-  text-align: center;
-}
+    .email-enc {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: var(--accent-2);
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px 8px;
+      user-select: all;
+    }
 
-</style>
+    footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; }
+
+    @media (max-width: 480px) {
+      .wrap { padding: 40px 20px 72px; }
+      header { gap: 16px; }
+      .avatar { width: 64px; height: 64px; }
+      ul.links .label { display: block; min-width: 0; }
+    }
+  </style>
 </head>
-
-<body ng-controller="BlogController">
-<div class="solarized-light">
-<div style="display: block; height: 50px; text-align:center; line-height:50px; font-family: Consolas, monaco, monospace;">
-	<h2 class="yellow">
-		{{blogTitle}} ~>
-                /optimist/meditator/coder	
-	</h2>
-</div>
-
-<div id="contacts" style="text-align:center;" class="monospace">
-	{{address}},
-	<a>{{email}}</a>
-</div>
-
-<p></p>
-
-<div class="outer">
-    <div class="center-helper">
-        <div class="inner">
-            <div class="img-circular"></div>
+<body>
+  <!-- Fallback content for crawlers/no-JS; React replaces this on load -->
+  <div id="root">
+    <main class="wrap">
+      <header>
+        <img class="avatar" src="https://github.com/prayagupa.png" alt="Prayag Upadhyay" width="84" height="84" />
+        <div>
+          <h1>Prayag Upadhyay</h1>
+          <p class="tagline mono">father / optimist / meditator / coder / builder</p>
         </div>
-    </div>
-</div>
+      </header>
+      <p>Software engineer (Java, Python, distributed systems, LLMs), father, writer, and meditator.</p>
+    </main>
+  </div>
 
-<br/>
-<br/>
+  <!-- React via CDN — no build step -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-</div>
-<div class="solarized monospace">
-<pre style="color:#839496">
+  <script type="text/babel" data-presets="react">
+    const { useState, StrictMode } = React;
 
-                                                  $ GET /whois/prayagupa
-                                                  
-                                                  {
+    const PROFILE = {
+      name: "Prayag Upadhyay",
+      tagline: ["father", "optimist", "meditator", "coder", "builder"],
+      avatar: "https://github.com/prayagupa.png",
+      about:
+        "Software builder working on backend and distributed systems, now deep in " +
+        "LLMs — RAG, agents, and MCP. I write code, write words, and sit still " +
+        "in between. Based in the Pacific North West.",
+      skills: ["Java", "Python", "Distributed Systems", "LLMs", "RAG", "AI Agents", "MCP", "Writing"],
+      links: [
+        { label: "code", text: "github.com/prayagupa", href: "https://github.com/prayagupa/" },
+        { label: "answers", text: "stackoverflow", href: "https://stackoverflow.com/users/432903/prayag-upd" },
+        { label: "thoughts", text: "@evolving__unit", href: "https://x.com/evolving__unit" },
+        { label: "résumé", text: "linkedin", href: "https://linkedin.com/in/prayagupadhyay/" },
+      ],
+      emailEnc: "cHJheWFnLnVwZEBnbWFpbC5jb20=",
+    };
 
-                                                         "skills" : {
+    // One joke per day of the week (Sun..Sat) — about me and my philosophy of life.
+    const JOKES = [
+      "An optimist who still believes this build will pass on the first try.",
+      "I meditate to empty my mind; then I git pull and it fills right back up.",
+      "Raising a kid and a codebase: both quietly ignore my carefully written instructions.",
+      "I believe in eventual consistency — for my services and for my life plans.",
+      "I prompt LLMs all day and still can't get my toddler to follow a system prompt.",
+      "Be present, ship small, and trust the garbage collector to handle your regrets.",
+      "I write code and I write words, yet still can't keep a commit message under 50 chars.",
+    ];
 
-                                                                   "<span class="magenta">software engineering</span>" : <span class="yellow">[ java, scala, android** ]</span>,
+    function Header({ name, tagline, avatar }) {
+      return (
+        <header>
+          <img className="avatar" src={avatar} alt={name} width="84" height="84" />
+          <div>
+            <h1>{name}</h1>
+            <p className="tagline mono">
+              {tagline.map((word, i) => (
+                <React.Fragment key={word}>
+                  {i > 0 && <span className="sep"> / </span>}
+                  {word}
+                </React.Fragment>
+              ))}
+            </p>
+          </div>
+        </header>
+      );
+    }
 
-								   "<span class="magenta">writer</span>" : [यिदाम - 2011, པྲ - 2018, म - 2019]
+    function Section({ title, children }) {
+      return (
+        <section>
+          <h2>{title}</h2>
+          {children}
+        </section>
+      );
+    }
 
-                                                         }
-                                                  }
+    // Gate the email behind a tiny human check: reveal a math question on click,
+    // and only decode the address once it's answered correctly.
+    function EmailLink({ enc }) {
+      const [phase, setPhase] = useState("idle"); // idle | challenge | revealed
+      const [q, setQ] = useState({ a: 0, b: 0 });
+      const [guess, setGuess] = useState("");
+      const [error, setError] = useState(false);
 
-                                                  $ GET /whereis/prayagupa
+      function start(e) {
+        e.preventDefault();
+        setQ({ a: 2 + Math.floor(Math.random() * 8), b: 2 + Math.floor(Math.random() * 8) });
+        setGuess("");
+        setError(false);
+        setPhase("challenge");
+      }
 
-                                                  {
-                                                         "internet_profile_logs" : {
+      function verify(e) {
+        e.preventDefault();
+        if (parseInt(guess, 10) === q.a + q.b) {
+          setPhase("revealed");
+        } else {
+          setError(true);
+          setGuess("");
+        }
+      }
 
-                                                                    "<span class="magenta">coding</span>": "<a class="yellow" href="https://github.com/prayagupa/">github</a>", 
+      if (phase === "revealed") {
+        return <code className="email-enc" title="base64 — decode it">{"base64 -d <<< " + enc}</code>;
+      }
 
-                                                                    "<span class="magenta">Stackoverflow contribution</span>": [ "<a class="yellow" href="http://stackoverflow.com/users/432903/prayag-upd">@stackoverflow</a>"],
-                                                                    "<span class="magenta">tweets</span>": "<a class="yellow" href="https://twitter.com/identity_monad">@identity_monad</a>",
+      if (phase === "challenge") {
+        return (
+          <form className="captcha" onSubmit={verify}>
+            <label>
+              {q.a} + {q.b} ={" "}
+              <input
+                type="text"
+                inputMode="numeric"
+                value={guess}
+                onChange={(e) => setGuess(e.target.value)}
+                aria-label={`What is ${q.a} plus ${q.b}?`}
+                autoFocus
+              />
+            </label>
+            <button type="submit">verify</button>
+            {error && <span className="err">nope, try again</span>}
+          </form>
+        );
+      }
 
-                                                                    "<span class="magenta">resume</span>": "<a class="yellow" href="http://linkedin.com/in/prayagupadhyay/">@linkedin</a>",
+      return <a href="#" onClick={start}>reveal</a>;
+    }
 
-                                                                    "<span class="magenta">code logger</span>" : "<a class="yellow" href="http://linkedin.com/in/prayagupadhyay/">linkedin posts</a>"
-                                                         }
-		                                 }
-</pre>
+    function App() {
+      return (
+        <main className="wrap">
+          <Header name={PROFILE.name} tagline={PROFILE.tagline} avatar={PROFILE.avatar} />
 
-</div>
+          <Section title="About">
+            <p>{PROFILE.about}</p>
+          </Section>
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
-<script src="js/application.js"></script>
+          <Section title="Building with">
+            <div className="tags mono">
+              {PROFILE.skills.map((s) => (
+                <span className="tag" key={s}>{s}</span>
+              ))}
+            </div>
+          </Section>
+
+          <Section title="Elsewhere">
+            <ul className="links mono">
+              {PROFILE.links.map((l) => (
+                <li key={l.label}>
+                  <span className="label">{l.label}</span>
+                  <a href={l.href} rel="me">{l.text}</a>
+                </li>
+              ))}
+              <li>
+                <span className="label">email</span>
+                <EmailLink enc={PROFILE.emailEnc} />
+              </li>
+            </ul>
+          </Section>
+
+          <footer className="mono">
+            {JOKES[new Date().getDay()]}
+          </footer>
+        </main>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(
+      <StrictMode>
+        <App />
+      </StrictMode>
+    );
+  </script>
 </body>
 </html>

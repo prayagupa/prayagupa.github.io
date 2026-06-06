@@ -1,0 +1,20 @@
+# Prayag Upadhyay
+
+> Software engineer (Java, Python, distributed systems, LLMs), father, optimist,
+> writer, and meditator based in the Pacific North West. Personal homepage.
+
+## About
+- Name: Prayag Upadhyay (handle: prayagupa)
+- Role: Staff Software Engineer — backend and distributed systems
+- Also: father, optimist, meditator, builder
+- Interests: software engineering, writing, meditation
+- Building with: LLMs, RAG, AI agents, MCP
+
+## Links
+- GitHub: https://github.com/prayagupa/
+- Stack Overflow: https://stackoverflow.com/users/432903/prayag-upd
+- Twitter/X: https://x.com/evolving__unit
+- LinkedIn: https://linkedin.com/in/prayagupadhyay/
+
+## Site
+- Home: https://prayagupa.github.io/
