@@ -223,17 +223,16 @@
   </style>
 </head>
 <body>
-  <!-- Fallback content for crawlers/no-JS; React replaces this on load -->
+  <!-- Static page; animations via lightweight vanilla JS below -->
   <div id="root">
     <main class="wrap">
       <header>
-        <img class="avatar" src="https://github.com/prayagupa.png" alt="Prayag Upadhyay" width="84" height="84" />
+        <img class="avatar" src="https://github.com/prayagupa.png" alt="Prayag Upadhyay" width="84" height="84" loading="lazy" decoding="async" />
         <div>
           <h1 data-slot-name="Prayag Upadhyay">Prayag Upadhyay</h1>
           <p class="tagline mono">father / optimist / meditator / coder / builder</p>
         </div>
       </header>
-      <p>Software builder (LLMs, Java, Python, distributed systems), father, writer, and meditator.</p>
 
       <section>
         <h2>About</h2>
@@ -264,6 +263,8 @@
           <li><span class="label">email</span> <span data-email-reveal data-enc="cHJheWFnLnVwZEBnbWFpbC5jb20="><a href="#">reveal</a></span></li>
         </ul>
       </section>
+
+      <footer class="mono" data-daily-joke></footer>
     </main>
   </div>
 
@@ -277,15 +278,22 @@
       var typeRunId = 0;
       var slotInterval = null;
       var typeInterval = null;
+      var widthCache = Object.create(null);
+      var measureEl = null;
 
       function measureChar(ch, el) {
-        var probe = document.createElement("span");
-        probe.style.cssText = "position:absolute;visibility:hidden;white-space:pre;pointer-events:none;";
-        probe.textContent = ch;
-        el.appendChild(probe);
-        var w = probe.getBoundingClientRect().width;
-        el.removeChild(probe);
-        return w;
+        var font = getComputedStyle(el).font;
+        var key = font + "\0" + ch;
+        if (key in widthCache) return widthCache[key];
+        if (!measureEl) {
+          measureEl = document.createElement("span");
+          measureEl.style.cssText = "position:absolute;visibility:hidden;white-space:pre;pointer-events:none;";
+          document.body.appendChild(measureEl);
+        }
+        measureEl.style.font = font;
+        measureEl.textContent = ch;
+        widthCache[key] = measureEl.getBoundingClientRect().width;
+        return widthCache[key];
       }
 
       function setCharWidth(node, px) {
@@ -359,9 +367,8 @@
         const runId = slotRunId;
         const baseDelay = parseInt(el.dataset.slotDelay || "0", 10);
         const chars = Array.from(text);
-        const widths = chars.map(function (ch) {
-          return measureChar(ch, el);
-        });
+        const tight = el.tagName === "H1";
+        const widths = tight ? chars.map(function (ch) { return measureChar(ch, el); }) : null;
 
         el.dataset.slotReady = "1";
         el.textContent = "";
@@ -369,23 +376,24 @@
         if (el.tagName === "H1") el.classList.add("slot-name");
         el.setAttribute("aria-label", text);
 
-        el.appendChild(makeFixed(chars[0], widths[0]));
+        el.appendChild(makeFixed(chars[0], widths && widths[0]));
 
         chars.slice(1, -1).forEach(function (ch, i) {
           var idx = i + 1;
+          var w = widths && widths[idx];
           if (ch === " ") {
             const sp = document.createElement("span");
             sp.className = "slot-space";
             sp.innerHTML = "&nbsp;";
             sp.setAttribute("aria-hidden", "true");
-            setCharWidth(sp, widths[idx]);
+            if (w) setCharWidth(sp, w);
             el.appendChild(sp);
           } else {
-            el.appendChild(makeReel(ch, baseDelay + 80 + i * 95, widths[idx], runId));
+            el.appendChild(makeReel(ch, baseDelay + 80 + i * 95, w, runId));
           }
         });
 
-        el.appendChild(makeFixed(chars[chars.length - 1], widths[chars.length - 1]));
+        el.appendChild(makeFixed(chars[chars.length - 1], widths && widths[chars.length - 1]));
       }
 
       function replaySlot(el) {
@@ -477,13 +485,20 @@
         typeInterval = setInterval(replayAllTypewriters, TYPE_INTERVAL_MS);
       }
 
-      scan();
-      startSlotLoop();
-      startTypeLoop();
+      var JOKES = [
+        "An optimist who still believes this build will pass on the first try.",
+        "I meditate to empty my mind; then I git pull and it fills right back up.",
+        "Raising a kid and a codebase: both quietly ignore my carefully written instructions.",
+        "I believe in eventual consistency — for my services and for my life plans.",
+        "I prompt LLMs all day and still can't get my toddler to follow a system prompt.",
+        "Be present, ship small, and trust the garbage collector to handle your regrets.",
+        "I write code and I write words, yet still can't keep a commit message under 50 chars.",
+      ];
 
-      var root = document.getElementById("root");
-      if (root) {
-        new MutationObserver(scan).observe(root, { childList: true, subtree: true });
+      function renderDailyJoke() {
+        document.querySelectorAll("[data-daily-joke]").forEach(function (el) {
+          el.textContent = JOKES[new Date().getDay()];
+        });
       }
 
       function startEmailChallenge(wrap) {
@@ -536,126 +551,20 @@
           input.focus();
         }
       });
+
+      function boot() {
+        scan();
+        startSlotLoop();
+        startTypeLoop();
+        renderDailyJoke();
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", boot);
+      } else {
+        boot();
+      }
     })();
-  </script>
-
-  <!-- React via CDN — no build step -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-  <script type="text/babel" data-presets="react">
-    const { StrictMode } = React;
-
-    const PROFILE = {
-      name: "Prayag Upadhyay",
-      tagline: ["father", "optimist", "meditator", "coder", "builder"],
-      avatar: "https://github.com/prayagupa.png",
-      about:
-        "Software builder (LLMs, Java, Python, distributed systems), father, writer, " +
-        "and meditator. Now deep in RAG, agents, and MCP. I write code, write words, " +
-        "and sit still in between. Based in the Pacific North West.",
-      skills: ["LLMs", "Java", "Python", "Distributed Systems", "RAG", "AI Agents", "MCP", "Writing"],
-      links: [
-        { label: "code", text: "github.com/prayagupa", href: "https://github.com/prayagupa/" },
-        { label: "answers", text: "stackoverflow", href: "https://stackoverflow.com/users/432903/prayag-upd" },
-        { label: "thoughts", text: "@evolving__unit", href: "https://x.com/evolving__unit" },
-        { label: "résumé", text: "linkedin", href: "https://linkedin.com/in/prayagupadhyay/" },
-      ],
-      emailEnc: "cHJheWFnLnVwZEBnbWFpbC5jb20=",
-    };
-
-    // One joke per day of the week (Sun..Sat) — about me and my philosophy of life.
-    const JOKES = [
-      "An optimist who still believes this build will pass on the first try.",
-      "I meditate to empty my mind; then I git pull and it fills right back up.",
-      "Raising a kid and a codebase: both quietly ignore my carefully written instructions.",
-      "I believe in eventual consistency — for my services and for my life plans.",
-      "I prompt LLMs all day and still can't get my toddler to follow a system prompt.",
-      "Be present, ship small, and trust the garbage collector to handle your regrets.",
-      "I write code and I write words, yet still can't keep a commit message under 50 chars.",
-    ];
-
-    function Header({ name, tagline, avatar }) {
-      return (
-        <header>
-          <img className="avatar" src={avatar} alt={name} width="84" height="84" />
-          <div>
-            <h1 data-slot-name={name}>{name}</h1>
-            <p className="tagline mono">
-              {tagline.map((word, i) => (
-                <React.Fragment key={word}>
-                  {i > 0 && <span className="sep"> / </span>}
-                  {word}
-                </React.Fragment>
-              ))}
-            </p>
-          </div>
-        </header>
-      );
-    }
-
-    function Section({ title, children }) {
-      return (
-        <section>
-          <h2>{title}</h2>
-          {children}
-        </section>
-      );
-    }
-
-    function EmailLink({ enc }) {
-      return (
-        <span data-email-reveal data-enc={enc}>
-          <a href="#">reveal</a>
-        </span>
-      );
-    }
-
-    function App() {
-      return (
-        <main className="wrap">
-          <Header name={PROFILE.name} tagline={PROFILE.tagline} avatar={PROFILE.avatar} />
-
-          <Section title="About">
-            <p data-typewriter={PROFILE.about}>{PROFILE.about}</p>
-          </Section>
-
-          <Section title="Building with">
-            <div className="tags mono">
-              {PROFILE.skills.map((s, i) => (
-                <span className="tag" key={s} data-slot-name={s} data-slot-delay={i * 120}>{s}</span>
-              ))}
-            </div>
-          </Section>
-
-          <Section title="Elsewhere">
-            <ul className="links mono">
-              {PROFILE.links.map((l) => (
-                <li key={l.label}>
-                  <span className="label">{l.label}</span>
-                  <a href={l.href} rel="me">{l.text}</a>
-                </li>
-              ))}
-              <li>
-                <span className="label">email</span>
-                <EmailLink enc={PROFILE.emailEnc} />
-              </li>
-            </ul>
-          </Section>
-
-          <footer className="mono">
-            {JOKES[new Date().getDay()]}
-          </footer>
-        </main>
-      );
-    }
-
-    ReactDOM.createRoot(document.getElementById("root")).render(
-      <StrictMode>
-        <App />
-      </StrictMode>
-    );
   </script>
 </body>
 </html>
