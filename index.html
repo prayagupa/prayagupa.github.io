@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Prayag Upadhyay — Software Engineer</title>
-  <meta name="description" content="Prayag Upadhyay — software engineer (Java, Python, distributed systems, LLMs), father, optimist, writer, and meditator based in the Pacific North West." />
+  <title>Prayag Upadhyay — Software Builder</title>
+  <meta name="description" content="Prayag Upadhyay — software builder (LLMs, Java, Python, distributed systems), father, optimist, writer, and meditator based in the Pacific North West." />
   <meta name="author" content="Prayag Upadhyay" />
   <link rel="canonical" href="https://prayagupa.github.io/" />
   <link rel="icon" href="https://github.com/prayagupa.png" />
 
   <!-- Open Graph / social -->
   <meta property="og:type" content="profile" />
-  <meta property="og:title" content="Prayag Upadhyay — Software Engineer" />
-  <meta property="og:description" content="Software engineer (Java, Python, distributed systems, LLMs), father, optimist, writer, and meditator." />
+  <meta property="og:title" content="Prayag Upadhyay — Software Builder" />
+  <meta property="og:description" content="Software builder (LLMs, Java, Python, distributed systems), father, optimist, writer, and meditator." />
   <meta property="og:url" content="https://prayagupd.github.io/" />
   <meta property="og:image" content="https://github.com/prayagupa.png" />
   <meta name="twitter:card" content="summary" />
@@ -27,9 +27,9 @@
     "alternateName": "prayagupa",
     "url": "https://prayagupd.github.io/",
     "image": "https://github.com/prayagupa.png",
-    "jobTitle": "Staff Software Engineer",
-    "description": "Software engineer (Java, Python, distributed systems, LLMs), father, optimist, writer, and meditator.",
-    "knowsAbout": ["Software Engineering", "Java", "Python", "Distributed Systems", "Large Language Models", "Retrieval-Augmented Generation", "AI Agents", "Model Context Protocol"],
+    "jobTitle": "Staff Software Builder",
+    "description": "Software builder (LLMs, Java, Python, distributed systems), father, optimist, writer, and meditator.",
+    "knowsAbout": ["Large Language Models", "Java", "Python", "Distributed Systems", "Software Engineering", "Retrieval-Augmented Generation", "AI Agents", "Model Context Protocol"],
     "sameAs": [
       "https://github.com/prayagupa/",
       "https://stackoverflow.com/users/432903/prayag-upd",
@@ -94,6 +94,54 @@
     h1 {
       font-size: 1.5rem; margin: 0; color: var(--fg-strong); font-weight: 600;
       letter-spacing: -0.01em;
+    }
+    h1.slot-name,
+    .tag.slot-text {
+      display: inline-flex;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 0;
+    }
+    h1.slot-name .slot-fixed,
+    h1.slot-name .slot-reel,
+    h1.slot-name .slot-space {
+      flex: 0 0 auto;
+    }
+    .slot-fixed { display: inline-block; color: inherit; }
+    .slot-space { display: inline-block; }
+    .slot-reel {
+      display: inline-block;
+      overflow: hidden;
+      height: 1.5em;
+      line-height: 1.5em;
+      vertical-align: bottom;
+      text-align: left;
+    }
+    h1.slot-name .slot-reel {
+      min-width: 0;
+    }
+    .tag.slot-text .slot-reel {
+      min-width: 0.55em;
+      text-align: center;
+    }
+    .slot-reel-track {
+      display: block;
+      will-change: transform;
+    }
+    .slot-reel.is-spinning .slot-reel-track {
+      transition: transform 0.07s linear;
+    }
+    .slot-reel.is-done .slot-reel-track {
+      transition: transform 0.42s cubic-bezier(0.18, 0.85, 0.28, 1);
+    }
+    .slot-reel-char {
+      display: block;
+      height: 1.5em;
+      line-height: 1.5em;
+      color: inherit;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .slot-reel-track { transition: none !important; }
     }
     .tagline { margin: 4px 0 0; color: var(--muted); font-size: 0.95rem; }
     .tagline .sep { color: var(--accent-2); }
@@ -162,13 +210,246 @@
       <header>
         <img class="avatar" src="https://github.com/prayagupa.png" alt="Prayag Upadhyay" width="84" height="84" />
         <div>
-          <h1>Prayag Upadhyay</h1>
+          <h1 data-slot-name="Prayag Upadhyay">Prayag Upadhyay</h1>
           <p class="tagline mono">father / optimist / meditator / coder / builder</p>
         </div>
       </header>
-      <p>Software engineer (Java, Python, distributed systems, LLMs), father, writer, and meditator.</p>
+      <p>Software builder (LLMs, Java, Python, distributed systems), father, writer, and meditator.</p>
+
+      <section>
+        <h2>About</h2>
+        <p>Software builder working on backend and distributed systems, now deep in LLMs — RAG, agents, and MCP. I write code, write words, and sit still in between. Based in the Pacific North West.</p>
+      </section>
+
+      <section>
+        <h2>Building with</h2>
+        <div class="tags mono">
+          <span class="tag" data-slot-name="LLMs" data-slot-delay="0">LLMs</span>
+          <span class="tag" data-slot-name="Java" data-slot-delay="120">Java</span>
+          <span class="tag" data-slot-name="Python" data-slot-delay="240">Python</span>
+          <span class="tag" data-slot-name="Distributed Systems" data-slot-delay="360">Distributed Systems</span>
+          <span class="tag" data-slot-name="RAG" data-slot-delay="480">RAG</span>
+          <span class="tag" data-slot-name="AI Agents" data-slot-delay="600">AI Agents</span>
+          <span class="tag" data-slot-name="MCP" data-slot-delay="720">MCP</span>
+          <span class="tag" data-slot-name="Writing" data-slot-delay="840">Writing</span>
+        </div>
+      </section>
+
+      <section>
+        <h2>Elsewhere</h2>
+        <ul class="links mono">
+          <li><span class="label">code</span> <a href="https://github.com/prayagupa/" rel="me">github.com/prayagupa</a></li>
+          <li><span class="label">answers</span> <a href="https://stackoverflow.com/users/432903/prayag-upd" rel="me">stackoverflow</a></li>
+          <li><span class="label">thoughts</span> <a href="https://x.com/evolving__unit" rel="me">@evolving__unit</a></li>
+          <li><span class="label">résumé</span> <a href="https://linkedin.com/in/prayagupadhyay/" rel="me">linkedin</a></li>
+          <li><span class="label">email</span> <span data-email-reveal data-enc="cHJheWFnLnVwZEBnbWFpbC5jb20="><a href="#">reveal</a></span></li>
+        </ul>
+      </section>
     </main>
   </div>
+
+  <script>
+    (function () {
+      const REEL = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      const SLOT_INTERVAL_MS = 5000;
+      var slotRunId = 0;
+      var slotInterval = null;
+
+      function measureChar(ch, el) {
+        var probe = document.createElement("span");
+        probe.style.cssText = "position:absolute;visibility:hidden;white-space:pre;pointer-events:none;";
+        probe.textContent = ch;
+        el.appendChild(probe);
+        var w = probe.getBoundingClientRect().width;
+        el.removeChild(probe);
+        return w;
+      }
+
+      function setCharWidth(node, px) {
+        node.style.width = px + "px";
+        node.style.minWidth = px + "px";
+        node.style.maxWidth = px + "px";
+      }
+
+      function makeFixed(ch, width) {
+        const el = document.createElement("span");
+        el.className = "slot-fixed";
+        el.textContent = ch;
+        if (width) setCharWidth(el, width);
+        return el;
+      }
+
+      function makeReel(target, delay, width, runId) {
+        const reel = document.createElement("span");
+        reel.className = "slot-reel is-spinning";
+        reel.setAttribute("aria-hidden", "true");
+        if (width) setCharWidth(reel, width);
+
+        const track = document.createElement("span");
+        track.className = "slot-reel-track";
+
+        const spins = 10 + Math.floor(Math.random() * 8);
+        const strip = [];
+        for (let i = 0; i < spins; i++) {
+          strip.push(REEL[Math.floor(Math.random() * REEL.length)]);
+        }
+        strip.push(target);
+
+        strip.forEach(function (ch) {
+          const cell = document.createElement("span");
+          cell.className = "slot-reel-char";
+          cell.textContent = ch;
+          if (width) setCharWidth(cell, width);
+          track.appendChild(cell);
+        });
+
+        reel.appendChild(track);
+
+        let step = 0;
+        function tick() {
+          if (runId !== slotRunId) return;
+          step++;
+          track.style.transform = "translateY(-" + (step * 1.5) + "em)";
+          if (step >= strip.length - 1) {
+            reel.classList.remove("is-spinning");
+            reel.classList.add("is-done");
+            return;
+          }
+          const progress = step / (strip.length - 1);
+          setTimeout(tick, 45 + progress * progress * 280);
+        }
+
+        setTimeout(function () {
+          if (runId !== slotRunId) return;
+          tick();
+        }, delay);
+        return reel;
+      }
+
+      function buildSlotText(el) {
+        if (el.dataset.slotReady) return;
+
+        const text = el.dataset.slotName || el.textContent.trim();
+        if (!text || text.length <= 2) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        const runId = slotRunId;
+        const baseDelay = parseInt(el.dataset.slotDelay || "0", 10);
+        const chars = Array.from(text);
+        const widths = chars.map(function (ch) {
+          return measureChar(ch, el);
+        });
+
+        el.dataset.slotReady = "1";
+        el.textContent = "";
+        el.classList.add("slot-text");
+        if (el.tagName === "H1") el.classList.add("slot-name");
+        el.setAttribute("aria-label", text);
+
+        el.appendChild(makeFixed(chars[0], widths[0]));
+
+        chars.slice(1, -1).forEach(function (ch, i) {
+          var idx = i + 1;
+          if (ch === " ") {
+            const sp = document.createElement("span");
+            sp.className = "slot-space";
+            sp.innerHTML = "&nbsp;";
+            sp.setAttribute("aria-hidden", "true");
+            setCharWidth(sp, widths[idx]);
+            el.appendChild(sp);
+          } else {
+            el.appendChild(makeReel(ch, baseDelay + 80 + i * 95, widths[idx], runId));
+          }
+        });
+
+        el.appendChild(makeFixed(chars[chars.length - 1], widths[chars.length - 1]));
+      }
+
+      function replaySlot(el) {
+        const text = el.dataset.slotName;
+        if (!text || text.length <= 2) return;
+
+        delete el.dataset.slotReady;
+        el.classList.remove("slot-text", "slot-name");
+        el.textContent = text;
+        buildSlotText(el);
+      }
+
+      function replayAllSlots() {
+        slotRunId++;
+        document.querySelectorAll("[data-slot-name]").forEach(replaySlot);
+      }
+
+      function scan() {
+        document.querySelectorAll("[data-slot-name]:not([data-slot-ready])").forEach(buildSlotText);
+      }
+
+      function startSlotLoop() {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if (slotInterval) clearInterval(slotInterval);
+        slotInterval = setInterval(replayAllSlots, SLOT_INTERVAL_MS);
+      }
+
+      scan();
+      startSlotLoop();
+
+      var root = document.getElementById("root");
+      if (root) {
+        new MutationObserver(scan).observe(root, { childList: true, subtree: true });
+      }
+
+      function startEmailChallenge(wrap) {
+        var a = 2 + Math.floor(Math.random() * 8);
+        var b = 2 + Math.floor(Math.random() * 8);
+        wrap.dataset.emailPhase = "challenge";
+        wrap.dataset.emailAnswer = String(a + b);
+        wrap.innerHTML =
+          '<form class="captcha">' +
+          '<label>' + a + " + " + b + ' = <input type="text" inputmode="numeric" aria-label="What is ' + a + " plus " + b + '?"></label>' +
+          '<button type="submit">verify</button>' +
+          "</form>";
+        wrap.querySelector("input").focus();
+      }
+
+      function revealEmail(wrap) {
+        wrap.dataset.emailPhase = "revealed";
+        wrap.innerHTML =
+          '<code class="email-enc" title="base64 — decode it">base64 -d &lt;&lt;&lt; ' +
+          wrap.dataset.enc +
+          "</code>";
+      }
+
+      document.addEventListener("click", function (e) {
+        var link = e.target.closest("[data-email-reveal] > a");
+        if (!link) return;
+        e.preventDefault();
+        var wrap = link.closest("[data-email-reveal]");
+        if (wrap.dataset.emailPhase === "revealed") return;
+        if (wrap.dataset.emailPhase !== "challenge") startEmailChallenge(wrap);
+      });
+
+      document.addEventListener("submit", function (e) {
+        var form = e.target.closest("[data-email-reveal] form.captcha");
+        if (!form) return;
+        e.preventDefault();
+        var wrap = form.closest("[data-email-reveal]");
+        var input = form.querySelector("input");
+        if (parseInt(input.value, 10) === parseInt(wrap.dataset.emailAnswer, 10)) {
+          revealEmail(wrap);
+        } else {
+          var err = form.querySelector(".err");
+          if (!err) {
+            err = document.createElement("span");
+            err.className = "err";
+            err.textContent = "nope, try again";
+            form.appendChild(err);
+          }
+          input.value = "";
+          input.focus();
+        }
+      });
+    })();
+  </script>
 
   <!-- React via CDN — no build step -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -176,17 +457,17 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <script type="text/babel" data-presets="react">
-    const { useState, StrictMode } = React;
+    const { StrictMode } = React;
 
     const PROFILE = {
       name: "Prayag Upadhyay",
       tagline: ["father", "optimist", "meditator", "coder", "builder"],
       avatar: "https://github.com/prayagupa.png",
       about:
-        "Software builder working on backend and distributed systems, now deep in " +
-        "LLMs — RAG, agents, and MCP. I write code, write words, and sit still " +
-        "in between. Based in the Pacific North West.",
-      skills: ["Java", "Python", "Distributed Systems", "LLMs", "RAG", "AI Agents", "MCP", "Writing"],
+        "Software builder (LLMs, Java, Python, distributed systems), father, writer, " +
+        "and meditator. Now deep in RAG, agents, and MCP. I write code, write words, " +
+        "and sit still in between. Based in the Pacific North West.",
+      skills: ["LLMs", "Java", "Python", "Distributed Systems", "RAG", "AI Agents", "MCP", "Writing"],
       links: [
         { label: "code", text: "github.com/prayagupa", href: "https://github.com/prayagupa/" },
         { label: "answers", text: "stackoverflow", href: "https://stackoverflow.com/users/432903/prayag-upd" },
@@ -212,7 +493,7 @@
         <header>
           <img className="avatar" src={avatar} alt={name} width="84" height="84" />
           <div>
-            <h1>{name}</h1>
+            <h1 data-slot-name={name}>{name}</h1>
             <p className="tagline mono">
               {tagline.map((word, i) => (
                 <React.Fragment key={word}>
@@ -235,57 +516,12 @@
       );
     }
 
-    // Gate the email behind a tiny human check: reveal a math question on click,
-    // and only decode the address once it's answered correctly.
     function EmailLink({ enc }) {
-      const [phase, setPhase] = useState("idle"); // idle | challenge | revealed
-      const [q, setQ] = useState({ a: 0, b: 0 });
-      const [guess, setGuess] = useState("");
-      const [error, setError] = useState(false);
-
-      function start(e) {
-        e.preventDefault();
-        setQ({ a: 2 + Math.floor(Math.random() * 8), b: 2 + Math.floor(Math.random() * 8) });
-        setGuess("");
-        setError(false);
-        setPhase("challenge");
-      }
-
-      function verify(e) {
-        e.preventDefault();
-        if (parseInt(guess, 10) === q.a + q.b) {
-          setPhase("revealed");
-        } else {
-          setError(true);
-          setGuess("");
-        }
-      }
-
-      if (phase === "revealed") {
-        return <code className="email-enc" title="base64 — decode it">{"base64 -d <<< " + enc}</code>;
-      }
-
-      if (phase === "challenge") {
-        return (
-          <form className="captcha" onSubmit={verify}>
-            <label>
-              {q.a} + {q.b} ={" "}
-              <input
-                type="text"
-                inputMode="numeric"
-                value={guess}
-                onChange={(e) => setGuess(e.target.value)}
-                aria-label={`What is ${q.a} plus ${q.b}?`}
-                autoFocus
-              />
-            </label>
-            <button type="submit">verify</button>
-            {error && <span className="err">nope, try again</span>}
-          </form>
-        );
-      }
-
-      return <a href="#" onClick={start}>reveal</a>;
+      return (
+        <span data-email-reveal data-enc={enc}>
+          <a href="#">reveal</a>
+        </span>
+      );
     }
 
     function App() {
@@ -299,8 +535,8 @@
 
           <Section title="Building with">
             <div className="tags mono">
-              {PROFILE.skills.map((s) => (
-                <span className="tag" key={s}>{s}</span>
+              {PROFILE.skills.map((s, i) => (
+                <span className="tag" key={s} data-slot-name={s} data-slot-delay={i * 120}>{s}</span>
               ))}
             </div>
           </Section>
