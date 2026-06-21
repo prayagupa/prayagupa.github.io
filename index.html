@@ -177,6 +177,38 @@
     ul.links li { padding: 8px 0; border-bottom: 1px solid var(--border); }
     ul.links li:last-child { border-bottom: 0; }
     ul.links .label { color: var(--muted); display: inline-block; min-width: 130px; }
+    ul.links[data-links-animate] li {
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    ul.links[data-links-animate] li.link-visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    ul.links[data-links-animate] li.link-active {
+      border-bottom-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+    }
+    ul.links[data-links-animate] li.link-active .label {
+      color: var(--accent-2);
+    }
+    ul.links[data-links-animate] li.link-active .label::before {
+      content: "› ";
+      color: var(--accent);
+    }
+    ul.links[data-links-animate] .link-scramble {
+      letter-spacing: 0.02em;
+    }
+    ul.links[data-links-animate] li.link-done .link-scramble {
+      letter-spacing: normal;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      ul.links[data-links-animate] li {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
 
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline; }
@@ -255,7 +287,7 @@
 
       <section>
         <h2>Elsewhere</h2>
-        <ul class="links mono">
+        <ul class="links mono" data-links-animate>
           <li><span class="label">code</span> <a href="https://github.com/prayagupa/" rel="me">github.com/prayagupa</a></li>
           <li><span class="label">answers</span> <a href="https://stackoverflow.com/users/432903/prayag-upd" rel="me">stackoverflow</a></li>
           <li><span class="label">thoughts</span> <a href="https://x.com/evolving__unit" rel="me">@evolving__unit</a></li>
@@ -276,8 +308,13 @@
       const TYPE_BASE_MS = 72;
       var slotRunId = 0;
       var typeRunId = 0;
+      var linkRunId = 0;
       var slotInterval = null;
       var typeInterval = null;
+      const LINK_SCRAMBLE_TICKS = 11;
+      const LINK_SCRAMBLE_MS = 42;
+      const LINK_ROW_STAGGER_MS = 320;
+      const LINK_CHARS = REEL + "0123456789._@-";
       var widthCache = Object.create(null);
       var measureEl = null;
 
@@ -465,12 +502,97 @@
 
       function replayAllTypewriters() {
         typeRunId++;
+        linkRunId++;
         document.querySelectorAll("[data-typewriter]").forEach(replayTypewriter);
+        document.querySelectorAll("[data-links-animate]").forEach(replayLinks);
+      }
+
+      function scrambleLinkText(text, progress) {
+        return Array.from(text).map(function (ch, i) {
+          if (progress >= (i + 0.55) / text.length) return ch;
+          if (" ./@-_".indexOf(ch) >= 0 && progress >= i / text.length) return ch;
+          return LINK_CHARS[Math.floor(Math.random() * LINK_CHARS.length)];
+        }).join("");
+      }
+
+      function buildLinksAnimate(ul) {
+        if (ul.dataset.linksReady) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        const runId = linkRunId;
+        const rows = Array.from(ul.querySelectorAll("li"));
+
+        ul.dataset.linksReady = "1";
+        rows.forEach(function (li) {
+          li.classList.remove("link-visible", "link-active", "link-done");
+          li.classList.add("link-pending");
+          var target = li.querySelector("a");
+          if (!target) return;
+          if (!target.dataset.finalText) target.dataset.finalText = target.textContent;
+          target.textContent = scrambleLinkText(target.dataset.finalText, 0);
+          target.classList.add("link-scramble");
+          target.style.pointerEvents = "none";
+        });
+
+        function animateRow(i) {
+          if (runId !== linkRunId || i >= rows.length) return;
+
+          var li = rows[i];
+          var target = li.querySelector("a");
+          if (!target) {
+            animateRow(i + 1);
+            return;
+          }
+
+          var finalText = target.dataset.finalText;
+          li.classList.remove("link-pending");
+          li.classList.add("link-visible", "link-active");
+
+          var tick = 0;
+          function scrambleTick() {
+            if (runId !== linkRunId) return;
+            tick++;
+            target.textContent = scrambleLinkText(finalText, tick / LINK_SCRAMBLE_TICKS);
+            if (tick < LINK_SCRAMBLE_TICKS) {
+              setTimeout(scrambleTick, LINK_SCRAMBLE_MS);
+              return;
+            }
+            target.textContent = finalText;
+            li.classList.remove("link-active");
+            li.classList.add("link-done");
+            target.style.pointerEvents = "";
+            setTimeout(function () { animateRow(i + 1); }, LINK_ROW_STAGGER_MS);
+          }
+
+          scrambleTick();
+        }
+
+        setTimeout(function () { animateRow(0); }, 350);
+      }
+
+      function replayLinks(ul) {
+        delete ul.dataset.linksReady;
+        ul.querySelectorAll("[data-email-reveal]").forEach(function (wrap) {
+          delete wrap.dataset.emailPhase;
+          delete wrap.dataset.emailAnswer;
+          wrap.innerHTML = '<a href="#">reveal</a>';
+        });
+        ul.querySelectorAll("li").forEach(function (li) {
+          li.classList.remove("link-pending", "link-visible", "link-active", "link-done");
+          var target = li.querySelector("a.link-scramble");
+          if (target && target.dataset.finalText) {
+            target.textContent = target.dataset.finalText;
+            target.classList.remove("link-scramble");
+            target.style.pointerEvents = "";
+          }
+        });
+        buildLinksAnimate(ul);
       }
 
       function scan() {
         document.querySelectorAll("[data-slot-name]:not([data-slot-ready])").forEach(buildSlotText);
         document.querySelectorAll("[data-typewriter]:not([data-typewriter-ready])").forEach(buildTypewriter);
+        document.querySelectorAll("[data-links-animate]:not([data-links-ready])").forEach(buildLinksAnimate);
       }
 
       function startSlotLoop() {
