@@ -154,6 +154,25 @@
 
     p { margin: 0 0 14px; }
 
+    .typewriter {
+      white-space: pre-wrap;
+    }
+    .type-cursor-fat {
+      display: inline-block;
+      width: 0.62em;
+      height: 1.05em;
+      background: var(--fg-strong);
+      vertical-align: text-bottom;
+      animation: type-blink 0.85s step-end infinite;
+    }
+    @keyframes type-blink {
+      0%, 45% { opacity: 1; }
+      55%, 100% { opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .type-cursor-fat { display: none; }
+    }
+
     ul.links { list-style: none; margin: 0; padding: 0; }
     ul.links li { padding: 8px 0; border-bottom: 1px solid var(--border); }
     ul.links li:last-child { border-bottom: 0; }
@@ -218,7 +237,7 @@
 
       <section>
         <h2>About</h2>
-        <p>Software builder working on backend and distributed systems, now deep in LLMs — RAG, agents, and MCP. I write code, write words, and sit still in between. Based in the Pacific North West.</p>
+        <p data-typewriter="Software builder (LLMs, Java, Python, distributed systems), father, writer, and meditator. Now deep in RAG, agents, and MCP. I write code, write words, and sit still in between. Based in the Pacific North West.">Software builder (LLMs, Java, Python, distributed systems), father, writer, and meditator. Now deep in RAG, agents, and MCP. I write code, write words, and sit still in between. Based in the Pacific North West.</p>
       </section>
 
       <section>
@@ -252,8 +271,12 @@
     (function () {
       const REEL = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
       const SLOT_INTERVAL_MS = 5000;
+      const TYPE_INTERVAL_MS = 40000;
+      const TYPE_BASE_MS = 72;
       var slotRunId = 0;
+      var typeRunId = 0;
       var slotInterval = null;
+      var typeInterval = null;
 
       function measureChar(ch, el) {
         var probe = document.createElement("span");
@@ -380,8 +403,66 @@
         document.querySelectorAll("[data-slot-name]").forEach(replaySlot);
       }
 
+      function charTypeDelay(ch) {
+        if (ch === " ") return TYPE_BASE_MS * 0.35;
+        if (",.;:!?—".indexOf(ch) >= 0) return TYPE_BASE_MS * 5;
+        return TYPE_BASE_MS;
+      }
+
+      function buildTypewriter(el) {
+        if (el.dataset.typewriterReady) return;
+
+        const text = el.dataset.typewriter || el.textContent.trim();
+        if (!text) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        const runId = typeRunId;
+        const chars = Array.from(text);
+
+        el.dataset.typewriterReady = "1";
+        el.textContent = "";
+        el.classList.add("typewriter");
+        el.setAttribute("aria-label", text);
+
+        const cursor = document.createElement("span");
+        cursor.className = "type-cursor-fat";
+        cursor.setAttribute("aria-hidden", "true");
+        el.appendChild(cursor);
+
+        var idx = 0;
+        function revealNext() {
+          if (runId !== typeRunId || idx >= chars.length) return;
+
+          const ch = chars[idx];
+          el.insertBefore(document.createTextNode(ch), cursor);
+          idx++;
+
+          if (idx < chars.length) {
+            setTimeout(revealNext, charTypeDelay(ch));
+          }
+        }
+
+        setTimeout(revealNext, 400);
+      }
+
+      function replayTypewriter(el) {
+        const text = el.dataset.typewriter;
+        if (!text) return;
+
+        delete el.dataset.typewriterReady;
+        el.classList.remove("typewriter");
+        el.textContent = text;
+        buildTypewriter(el);
+      }
+
+      function replayAllTypewriters() {
+        typeRunId++;
+        document.querySelectorAll("[data-typewriter]").forEach(replayTypewriter);
+      }
+
       function scan() {
         document.querySelectorAll("[data-slot-name]:not([data-slot-ready])").forEach(buildSlotText);
+        document.querySelectorAll("[data-typewriter]:not([data-typewriter-ready])").forEach(buildTypewriter);
       }
 
       function startSlotLoop() {
@@ -390,8 +471,15 @@
         slotInterval = setInterval(replayAllSlots, SLOT_INTERVAL_MS);
       }
 
+      function startTypeLoop() {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if (typeInterval) clearInterval(typeInterval);
+        typeInterval = setInterval(replayAllTypewriters, TYPE_INTERVAL_MS);
+      }
+
       scan();
       startSlotLoop();
+      startTypeLoop();
 
       var root = document.getElementById("root");
       if (root) {
@@ -530,7 +618,7 @@
           <Header name={PROFILE.name} tagline={PROFILE.tagline} avatar={PROFILE.avatar} />
 
           <Section title="About">
-            <p>{PROFILE.about}</p>
+            <p data-typewriter={PROFILE.about}>{PROFILE.about}</p>
           </Section>
 
           <Section title="Building with">
